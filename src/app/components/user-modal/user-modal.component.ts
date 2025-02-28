@@ -30,6 +30,7 @@ export class UserModalComponent implements OnInit {
   @Input({ required: true }) user: User = new User();
 
   closeModalEmiter = output();
+  confirmPassword = signal<string>('');
 
   deleteUser(id: number) {
     this.userService.delete(id).subscribe((res) => console.log(res));
@@ -55,22 +56,30 @@ export class UserModalComponent implements OnInit {
     // if (this.uu) {
     //   this.user.set(this.uu()!);
     // }
+    this.errorMsg.set('');
   }
 
   valideUser(): boolean {
-    if (this.user.first_name.trim().length < 1) {
-      this.errorMsg.set('first name cannot be empty');
-      return false;
-    }
+    // if (this.user.first_name.trim().length < 1) {
+    //   this.errorMsg.set('first name cannot be empty');
+    //   return false;
+    // }
 
-    if (this.user.last_name.trim().length < 1) {
-      this.errorMsg.set('last name cannot be empty');
-      return false;
-    }
+    // if (this.user.last_name.trim().length < 1) {
+    //   this.errorMsg.set('last name cannot be empty');
+    //   return false;
+    // }
 
-    if (this.user.username.trim().length < 1) {
-      this.errorMsg.set('username cannot be empty');
+    // if (this.user.username.trim().length < 1) {
+    //   this.errorMsg.set('username cannot be empty');
+    //   return false;
+    // }
+
+    if (this.user.password != this.confirmPassword()) {
+      this.errorMsg.set("Password don't match");
       return false;
+    } else {
+      this.errorMsg.set('');
     }
 
     return true;

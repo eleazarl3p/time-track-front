@@ -1,57 +1,119 @@
 <div class="modal-overlay">
   <div class="modal">
     <div class="modal-header">
-      <h2>Add New User</h2>
+      <h2>{{ user._id == 0 ? "Add new User" : "Edit User" }}</h2>
     </div>
 
-    <div class="field-group">
-      <label>First Name:</label>
-      <input type="text" [(ngModel)]="user.first_name" />
-    </div>
+    <form #form="ngForm">
+      <div class="field-group">
+        <label>First Name: </label>
+        <input
+          type="text"
+          [(ngModel)]="user.first_name"
+          name="firstname"
+          #firstname
+          required
+        />
+      </div>
 
-    <div class="field-group">
-      <label>Last Name:</label>
-      <input type="text" [(ngModel)]="user.last_name" />
-    </div>
+      <div class="field-group">
+        <label>Last Name:</label>
+        <input
+          type="text"
+          [(ngModel)]="user.last_name"
+          name="lastname"
+          #lastname
+          required
+        />
+      </div>
 
-    <div class="field-group">
-      <label>Username:</label>
-      <input type="text" [(ngModel)]="user.username" />
-    </div>
+      <div class="field-group">
+        <label>Username:</label>
+        <input
+          type="text"
+          [(ngModel)]="user.username"
+          name="username"
+          #username
+          required
+        />
+      </div>
 
-    <div class="field-group">
-      <label for="pt">Role:</label>
-      <select id="pt" name="role" [(ngModel)]="user.role">
-        <option value="">Select role</option>
-        <option value="ADMIN">Admin</option>
-        <option value="EMPLOYEE">User</option>
-      </select>
-    </div>
+      <div class="field-group">
+        <label for="pt">Role:</label>
+        <select id="pt" name="role" [(ngModel)]="user.role" name="role">
+          <option value="">Select role</option>
+          <option value="ADMIN">Admin</option>
+          <option value="EMPLOYEE">User</option>
+        </select>
+      </div>
 
-    <p class="error-msg" style="border: none">{{ errorMsg() }}</p>
+      <div class="field-group">
+        <label>Password:</label>
+        <input
+          type="password"
+          #userPassword="ngModel"
+          [(ngModel)]="user.password"
+          required
+          minlength="8"
+          name="password1"
+          (keyup)="valideUser()"
+        />
+      </div>
 
-    <div class="modal-buttons">
-      <button class="cancel-button" (click)="closeModalEmiter.emit()">
-        Cancel
-      </button>
+      <div class="field-group">
+        <label>Confirm Password:</label>
+        <input
+          type="password"
+          #userConfirmPassword="ngModel"
+          required
+          minlength="8"
+          [(ngModel)]="confirmPassword"
+          name="password2"
+          (keyup)="valideUser()"
+        />
+      </div>
 
-      <button
-        class="delete-button"
-        (click)="deleteUser(user._id)"
-        *ngIf="user._id != 0"
+      <p
+        class="error-msg"
+        style="border: none; margin: 0; padding: 0; text-align: center"
       >
-        Delete
-      </button>
-      <button
-        class="save-button"
-        (click)="updateUser(user)"
-        *ngIf="user._id != 0"
-      >
-        Update
-      </button>
-      <button class="save-button" (click)="saveUser()" *ngIf="user._id == 0">
-        Save
-      </button>
-    </div>
+        {{ errorMsg() }}
+      </p>
+
+      @if(!form.valid){
+      <p style="border: none; text-align: center; color: red">
+        Please fill the required field
+      </p>
+      }
+      <div class="modal-buttons">
+        <button class="cancel-button" (click)="closeModalEmiter.emit()">
+          Cancel
+        </button>
+
+        <button
+          class="delete-button"
+          (click)="deleteUser(user._id)"
+          *ngIf="user._id != 0"
+        >
+          Delete
+        </button>
+        <button
+          class="save-button"
+          (click)="updateUser(user)"
+          *ngIf="user._id != 0"
+          [disabled]="!form.valid"
+        >
+          Update
+        </button>
+        <button
+          class="save-button"
+          (click)="saveUser()"
+          *ngIf="user._id == 0"
+          [disabled]="!form.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </div>
