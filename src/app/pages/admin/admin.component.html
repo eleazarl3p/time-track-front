@@ -1,0 +1,324 @@
+<app-header [loggedInUser]="loggedInUser() ?? null"> </app-header>
+
+<!-- [value]="user"
+              [(ngModel)]="selectedUsers"
+              (change)="filterByUsers()" -->
+
+<app-task-filter
+  (dateRangeChanged)="filterTasks($event)"
+  (addTaskClick)="showReportModal()"
+></app-task-filter>
+
+<div class="container">
+  <!-- Left Panel: Users -->
+  <aside>
+    <div class="panel">
+      <div class="user-list">
+        <label>
+          <input
+            type="radio"
+            name="report"
+            value="itemized"
+            (change)="filterByReportType()"
+            [(ngModel)]="reportType"
+          />
+          Itemized
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="report"
+            value="summarized"
+            (change)="filterByReportType()"
+            [(ngModel)]="reportType"
+          />
+          Summarized
+        </label>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Users</h3>
+
+      <label class="user-checkbox bold">
+        <input
+          type="checkbox"
+          [checked]="selectedUsers.length === taskUsers().length"
+          (change)="toggleAllUsers($event)"
+        />
+        All
+      </label>
+
+      <div class="user-list">
+        @for (user of taskUsers(); track $index) {
+        <label class="user-checkbox">
+          <input
+            type="checkbox"
+            [checked]="selectedUsers.includes(user)"
+            (change)="toggleUserSelection(user, $event)"
+          />
+          {{ user.fullName() }}
+        </label>
+        }
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Projects</h3>
+
+      <label class="user-checkbox bold">
+        <input
+          type="checkbox"
+          [checked]="selectedJobs.length === jobs().length"
+          (change)="toggleAllJobs($event)"
+        />
+        All
+      </label>
+
+      <div class="user-list">
+        @for (job of jobs(); track $index) {
+        <label class="user-checkbox">
+          <input
+            type="checkbox"
+            [checked]="selectedJobs.includes(job)"
+            (change)="togleJobSelection(job, $event)"
+          />
+          {{ job.name }}
+        </label>
+
+        }
+      </div>
+    </div>
+  </aside>
+
+  @if(reportType() == 'itemized') {
+  <div class="task-table">
+    <div class="table-header">
+      <h2>Task Details</h2>
+
+      <button class="btn add-button" (click)="showModal()">Add</button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>User</th>
+            <th>Pay Type</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Hours</th>
+            <th>Cost Center</th>
+            <th>Approved</th>
+            <th class="action">Action</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (utask of filteredTasks; track utask._id) {
+          <tr>
+            <td>{{ utask.date | date : "EE, MM-dd-yyyy" : "UTC" }}</td>
+            <td>{{ utask.user.fullName() }}</td>
+            <td>{{ utask.pay_type }}</td>
+            <td>{{ utask.start_time | date : "h:mm a" : "+0000" }}</td>
+            <td>{{ utask.end_time | date : "h:mm a" : "+0000" }}</td>
+            <td>
+              {{ getFormattedHoursDecimal(utask.start_time, utask.end_time) }}
+            </td>
+            <td>
+              @if(utask?.code) {
+              {{
+                (utask.job?.name ? utask.job?.name : "") +
+                  (utask.item ? "/" + utask.item : "") +
+                  (utask?.code ? "/" + utask?.code : "")
+              }}
+              }
+            </td>
+            <td>
+              <ng-container *ngIf="utask.approved === null">
+                <span class="status-text">Not Yet Reviewed</span>
+              </ng-container>
+              <ng-container *ngIf="utask.approved === true">
+                <span class="approved">✔</span>
+              </ng-container>
+              <ng-container *ngIf="utask.approved === false">
+                <span class="rejected">✘</span>
+              </ng-container>
+            </td>
+            <td>
+              <button
+                class="btn btn-yes"
+                [disabled]="utask.approved != null"
+                (click)="reviewTask(utask._id, true)"
+              >
+                Yes
+              </button>
+              <button
+                class="btn btn-no"
+                [disabled]="utask.approved != null"
+                (click)="reviewTask(utask._id, false)"
+              >
+                No
+              </button>
+            </td>
+            <td>
+              <button class="btn" style="width: 80px" (click)="editTask(utask)">
+                Edit
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  } @else {
+  <div class="task-table">
+    <div class="table-header">
+      <h2>Task Details</h2>
+
+      <button class="btn add-button" (click)="showModal()">Add</button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Item</th>
+            <th>Hour</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (stask of sumarizedTask(); track $index) {
+          <tr>
+            <td>{{ stask.job }}</td>
+            <td>{{ stask.item }}</td>
+            <td>{{ stask.hour }} : {{ stask.minutes }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+</div>
+
+@if(modalNewTaskIsShown()) {
+
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add New Task</h2>
+    </div>
+    <div class="field-group">
+      <label>Date: </label>
+
+      <input type="date" [(ngModel)]="currentTask().date" />
+    </div>
+
+    @if (isCurrentRoute('/admin') && currentTask()._id == 0) {
+    <div class="field-group">
+      <label>User: </label>
+
+      <select name="user" [(ngModel)]="currentTask().user">
+        <option value="0">Select a user</option>
+        @for (user of users(); track user._id) {
+        <option [value]="user._id">{{ user.fullName() }}</option>
+        }
+      </select>
+    </div>
+    }
+    <div class="field-group">
+      <label for="pt">Pay Type:</label>
+      <select id="pt" name="pay_type" [(ngModel)]="currentTask().pay_type">
+        <option value="WORK">Work</option>
+        <option value="LUNCH">Lunch</option>
+        <option value="PERSONAL">Personal</option>
+        <option value="VACATION">Vacation</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label>Start Time:</label>
+      <input type="time" [(ngModel)]="currentTask().start_time" />
+    </div>
+
+    <div class="field-group">
+      <label>End Time:</label>
+      <input type="time" [(ngModel)]="currentTask().end_time" />
+    </div>
+
+    <div *ngIf="currentTask().pay_type == 'WORK'">
+      <!-- <div class="field-group">
+        <label>Code:</label>
+        <input type="text" [(ngModel)]="currentTask().code" />
+      </div> -->
+      <div class="field-group">
+        <label>Code:</label>
+        <select [(ngModel)]="currentTask().code">
+          <option value="null">Select</option>
+          <option *ngFor="let cc of costCenters" [value]="cc.code">
+            {{ cc.code }} | {{ cc.desc }}
+          </option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Job:</label>
+        <select [(ngModel)]="selectedModalJob" (change)="onJobChanged()">
+          <option value="0">Select a job</option>
+          <option *ngFor="let job of jobs()" [value]="job._id">
+            {{ job.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Item #:</label>
+        <select [(ngModel)]="selectedModalItem">
+          <option value="">Item number</option>
+          <option *ngFor="let item of items" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <p class="error-msg" style="border: none">{{ errorMsg() }}</p>
+
+    <div class="modal-buttons">
+      <button class="cancel-button" (click)="closeModal()">Cancel</button>
+      <button
+        class="save-button"
+        (click)="updateTask()"
+        *ngIf="currentTask()._id != 0"
+      >
+        Update
+      </button>
+      <button
+        class="save-button"
+        (click)="addTask(currentTaskUserId())"
+        *ngIf="currentTask()._id == 0"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+} @if(reportModal()) {
+<div class="modal-overlay">
+  <div class="modal" style="height: 200px; width: 300px">
+    <div class="modal-header">
+      <h2 style="text-align: center; margin-bottom: 50px">Report</h2>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="cancel-button" (click)="closeReportModal()">Cancel</button>
+      <button class="btn-pdf save-button" (click)="exportPDF()">PDF</button>
+      <button class="save-button" (click)="exportCSV()">CSV</button>
+    </div>
+  </div>
+</div>
+}

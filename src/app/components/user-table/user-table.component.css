@@ -1,0 +1,9 @@
+.btn-reset {
+  background-color: var(--primaryColor);
+  color: aliceblue;
+  margin-left: 10px;
+}
+
+.btn-reset:hover {
+  background-color: rgb(152, 75, 75);
+}

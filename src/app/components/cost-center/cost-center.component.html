@@ -1,0 +1,109 @@
+<div class="task-table">
+  <div class="table-header">
+    <h2>Cost Center</h2>
+
+    <button class="btn add-button" (click)="addCost()">Add</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Description</th>
+          <th class="action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cc of costCenters(); track cc._id) {
+        <tr>
+          <td>{{ cc.code }}</td>
+          <td>{{ cc.desc }}</td>
+          <td>
+            <button class="btn" (click)="editCostCenter(cc)">Edit</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@if(showCCModal()) {
+<div class="modal-overlay">
+  <div class="modal" style="width: 450px">
+    <div class="modal-header">
+      <h2>
+        {{ costCenter._id == 0 ? "Add Cost Center" : "Update Cost Center" }}
+      </h2>
+    </div>
+
+    <form #form="ngForm">
+      <div class="field-group">
+        <label>Code:</label>
+        <input
+          type="text"
+          [(ngModel)]="costCenter.code"
+          name="ccCode"
+          #ccCode="ngModel"
+          required
+        />
+      </div>
+      <div class="field-group">
+        @if(ccCode.touched) { @if(ccCode.errors?.['required']) {
+        <p class="text-danger">Code cannot be empty</p>
+        } }
+      </div>
+      <div class="field-group">
+        <label>Description:</label>
+        <input
+          type="text"
+          [(ngModel)]="costCenter.desc"
+          name="ccDesc"
+          #ccDesc="ngModel"
+          required
+        />
+      </div>
+      <div class="field-group">
+        @if(ccDesc.touched) { @if(ccDesc.errors?.['required']) {
+        <p class="text-danger">Description cannot be empty</p>
+        } }
+      </div>
+
+      <div class="modal-buttons">
+        <button class="cancel-button" (click)="closeModal($event)">
+          Cancel
+        </button>
+
+        <button
+          class="save-button"
+          (click)="saveCC()"
+          [disabled]="!form.valid"
+          *ngIf="costCenter._id == 0"
+        >
+          Save
+        </button>
+
+        <button
+          class="delete-button"
+          (click)="deleteCC(costCenter)"
+          [disabled]="!form.valid"
+          *ngIf="costCenter._id != 0"
+        >
+          Delete
+        </button>
+
+        <button
+          class="save-button"
+          (click)="updateCC(costCenter)"
+          [disabled]="!form.valid"
+          *ngIf="costCenter._id != 0"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+}

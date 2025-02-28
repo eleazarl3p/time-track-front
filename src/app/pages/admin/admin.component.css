@@ -1,0 +1,311 @@
+/* Container layout */
+.container {
+  display: flex;
+  gap: 10px; /* Adds space between aside and table */
+}
+
+/* Left Panel: Users & Projects */
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  flex-shrink: 0;
+}
+
+/* .panel {
+  width: 100%; 
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(236, 229, 229);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.user-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+} */
+
+.panel {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.job-container {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* background: #f9f9f9; */
+}
+
+.item-list {
+  padding-left: 20px;
+  margin-top: 5px;
+  /* background: #f1f1f1; */
+  /* border-left: 3px solid #007bff; */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+aside h3 {
+  padding-bottom: 10px;
+}
+
+/* User & Project list styling */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bold {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Task Table */
+/* .task-table {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-table h2 {
+  margin-bottom: 20px;
+  color: var(--primaryColor);
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+td {
+  color: #555;
+} 
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+*/
+
+/* Buttons */
+/* .btn {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+} */
+
+.btn-yes {
+  background-color: green;
+  color: white;
+}
+
+.btn-yes:hover {
+  background-color: rgb(45, 176, 71);
+}
+
+.btn-no {
+  background-color: red;
+  color: white;
+  margin-left: 8px;
+}
+
+.btn-no:hover {
+  background-color: #d82436;
+}
+
+.btn-edit {
+  background-color: yellow;
+  color: black;
+}
+
+.btn-edit:hover {
+  background-color: rgb(229, 237, 16);
+}
+
+/* Export buttons */
+/* .btn-pdf,
+.btn-csv {
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+} */
+
+.btn-pdf {
+  background-color: var(--primaryColor);
+}
+
+.btn-pdf:hover {
+  background-color: #a1646a;
+}
+.btn-csv {
+  background-color: #007bff;
+}
+
+/* Approval buttons */
+.btn:disabled,
+.btn:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Table Menu */
+/* .table-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.table-menu_items {
+  display: flex;
+  align-items: center;
+}
+
+.table-menu_items h2 {
+  margin: 0;
+  margin-right: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.table-menu_items label {
+  font-size: 1rem;
+  color: #555;
+  margin-right: 8px;
+}
+
+.table-menu_items select {
+  padding: 6px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.table-menu button {
+  padding: 8px 14px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.table-menu button:hover {
+  opacity: 0.8;
+} */
+
+/* sample menu */
+
+/* .radio-div {
+  font-family: Arial, sans-serif;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+label:hover {
+  color: #007bff;
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+
+input[type="radio"]:checked::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+} */
+
+/* input[type="radio"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+} */
+
+input[type="radio"]:checked {
+  background-color: var(--primaryColor);
+  border-color: var(--primaryColor);
+}
+
+.radio-div {
+  display: flex;
+  flex-direction: column;
+}

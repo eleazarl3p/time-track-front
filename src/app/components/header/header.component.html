@@ -1,0 +1,34 @@
+<header>
+  <nav>
+    <span
+      >Time Management |
+      <span style="font-weight: 100; font-size: 20px"
+        >{{ loggedInUser?.first_name }} {{ loggedInUser?.last_name }}</span
+      ></span
+    >
+
+    <div class="nav-right">
+      <ul>
+        <li
+          routerLink="/activity"
+          routerLinkActive="router-link-active"
+          [class.active]="isCurrentRoute('/activity')"
+        >
+          Task
+        </li>
+        @if (loggedInUser?.role == "ADMIN") {
+        <li routerLink="/admin" [class.active]="isCurrentRoute('/admin')">
+          Admin
+        </li>
+        }
+        <li
+          routerLink="/dashboard"
+          [class.active]="isCurrentRoute('/dashboard')"
+        >
+          Dashboard
+        </li>
+      </ul>
+      <button (click)="logOut()">Logout</button>
+    </div>
+  </nav>
+</header>

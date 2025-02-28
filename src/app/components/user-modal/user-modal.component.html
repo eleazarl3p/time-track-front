@@ -1,0 +1,57 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add New User</h2>
+    </div>
+
+    <div class="field-group">
+      <label>First Name:</label>
+      <input type="text" [(ngModel)]="user.first_name" />
+    </div>
+
+    <div class="field-group">
+      <label>Last Name:</label>
+      <input type="text" [(ngModel)]="user.last_name" />
+    </div>
+
+    <div class="field-group">
+      <label>Username:</label>
+      <input type="text" [(ngModel)]="user.username" />
+    </div>
+
+    <div class="field-group">
+      <label for="pt">Role:</label>
+      <select id="pt" name="role" [(ngModel)]="user.role">
+        <option value="">Select role</option>
+        <option value="ADMIN">Admin</option>
+        <option value="EMPLOYEE">User</option>
+      </select>
+    </div>
+
+    <p class="error-msg" style="border: none">{{ errorMsg() }}</p>
+
+    <div class="modal-buttons">
+      <button class="cancel-button" (click)="closeModalEmiter.emit()">
+        Cancel
+      </button>
+
+      <button
+        class="delete-button"
+        (click)="deleteUser(user._id)"
+        *ngIf="user._id != 0"
+      >
+        Delete
+      </button>
+      <button
+        class="save-button"
+        (click)="updateUser(user)"
+        *ngIf="user._id != 0"
+      >
+        Update
+      </button>
+      <button class="save-button" (click)="saveUser()" *ngIf="user._id == 0">
+        Save
+      </button>
+    </div>
+  </div>
+</div>

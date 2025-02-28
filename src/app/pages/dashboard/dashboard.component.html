@@ -1,0 +1,132 @@
+<app-header [loggedInUser]="loggedInUser()"></app-header>
+
+@if (loggedInUser()?.role == "EMPLOYEE") {
+<div class="modal">
+  <div class="modal-header">
+    <h2>Add New User</h2>
+  </div>
+
+  <form #form="ngForm">
+    <div class="field-group">
+      <label>First Name:</label>
+      <input
+        type="text"
+        [(ngModel)]="user.first_name"
+        disabled
+        name="firstname"
+      />
+    </div>
+
+    <div class="field-group">
+      <label>Last Name:</label>
+      <input
+        type="text"
+        [(ngModel)]="user.last_name"
+        disabled
+        name="last_name"
+      />
+    </div>
+
+    <div class="field-group">
+      <label>Username:</label>
+      <input type="text" [(ngModel)]="user.username" disabled name="username" />
+    </div>
+
+    <div class="field-group">
+      <label>Password:</label>
+      <input
+        type="password"
+        #userPassword="ngModel"
+        [(ngModel)]="user.password"
+        required
+        minlength="8"
+        name="password1"
+      />
+    </div>
+
+    <div class="field-group">
+      <label>Confirm Password:</label>
+      <input
+        type="password"
+        #userConfirmPassword="ngModel"
+        required
+        minlength="8"
+        [(ngModel)]="confirmPassword"
+        name="password2"
+      />
+    </div>
+
+    @if(userPassword.touched || userConfirmPassword.touched) {
+    @if(userPassword.errors?.['minlength'] ||
+    userConfirmPassword.errors?.['minlength']) {
+    <p style="color: red; border: none; text-align: center">
+      Password need to be at least 8 characters
+    </p>
+    } }
+    <!-- @if(userConfirmPassword.touched) {
+          @if(userConfirmPassword.errors?.['minlength']) {
+          <p style="color: red; border: none; text-align: center">
+            Password need to be at least 8 characters
+          </p>
+          } }  -->
+
+    @if(form.valid){
+    <p style="border: none; text-align: center; color: red">
+      {{ erroMessage() }}
+    </p>
+    } @else if (erroMessage().length > 1) {
+    <p style="border: none; text-align: center; color: red">
+      {{ erroMessage() }}
+    </p>
+    }
+
+    <div class="modal-buttons">
+      <button class="cancel-button" type="button" (click)="cancel()">
+        Cancel
+      </button>
+      <button
+        class="save-button"
+        (click)="updateUser(user)"
+        [disabled]="!form.valid"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</div>
+} @else if (loggedInUser()?.role == "ADMIN") {
+
+<div class="menu" style="margin: 20px 0">
+  <ul>
+    <li
+      [class.active]="activeItem() === 'User'"
+      (click)="setActiveItem('User')"
+    >
+      User
+    </li>
+    <li [class.active]="activeItem() === 'Job'" (click)="setActiveItem('Job')">
+      Job
+    </li>
+
+    <li
+      [class.active]="activeItem() === 'Cost'"
+      (click)="setActiveItem('Cost')"
+    >
+      Cost Center
+    </li>
+  </ul>
+</div>
+
+@if(activeItem() == "User") {
+<app-user-table></app-user-table>
+} @else if (activeItem() == 'Job') {
+<app-job></app-job>
+} @else if (activeItem() == 'Cost') {
+<app-cost-center></app-cost-center>
+} }
+
+<!-- [checked]="selectedUsers.includes(user)" (change)="toggleUserSelection(user,
+    $event)" -->
+
+<!-- @if (activeItem() == 'User') { @if(loggedInUser()?.role == "EMPLOYEE") { } @else
+if (loggedInUser()?.role == "ADMIN") { } } @else if (activeItem() == "Job") { } -->

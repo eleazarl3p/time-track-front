@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="task-table">
+    <div class="table-header">
+      <h2>Users</h2>
+
+      <button class="btn add-button" (click)="addNewUser()">Add</button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Nmae</th>
+            <th>Username</th>
+            <th class="action">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user._id) {
+          <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+              <button class="btn" (click)="editUser(user)">Edit</button>
+              <button class="btn btn-reset" (click)="resetUser(user)">
+                Reset
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+@if(modalUserIsShown()) {
+<app-user-modal
+  [user]="user()"
+  (closeModalEmiter)="closseUserModal()"
+></app-user-modal>
+}

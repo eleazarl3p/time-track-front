@@ -1,0 +1,28 @@
+<div class="header">
+  <div class="date-filter">
+    <div class="filter-left">
+      <label for="fromDate">From Date:</label>
+      <input
+        id="fromDate"
+        type="date"
+        [ngModel]="fromDate()"
+        (ngModelChange)="fromDate.set($event)"
+      />
+
+      <label for="toDate">To Date:</label>
+      <input
+        id="toDate"
+        type="date"
+        [min]="minToDate()"
+        [ngModel]="toDate()"
+        (ngModelChange)="toDate.set($event)"
+      />
+
+      <button (click)="onFilter()">Filter</button>
+    </div>
+  </div>
+  <!-- Add button on the right -->
+  @if(isCurrentRoute('/admin')) {
+  <button class="date-filter btn" (click)="report()">Report</button>
+  }
+</div>

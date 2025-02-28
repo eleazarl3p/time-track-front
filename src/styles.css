@@ -1,1 +1,371 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+:root {
+  --primaryColor: #6d0826;
+  --success: #218838;
+  --warning: rgb(244, 240, 9);
+  --danger: #c82333;
+}
+
+/* MODAL */
+.modal {
+  position: fixed; /* Ensures it stays above everything */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure it's above the table */
+  width: 400px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dim the background */
+  z-index: 999; /* Below the modal but above other elements */
+}
+
+/* Modal Overlay */
+/* .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* Modal Box */
+/* .modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+} */
+
+.modal h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Label Styles */
+.modal label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Input, p, span Styling */
+.modal input,
+.modal select,
+.modal p,
+.modal span {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #e70f0f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #4096d3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button:hover {
+  background-color: #65a9d38e;
+}
+
+/* Style the select dropdown like input fields */
+.modal select {
+  font-size: 14px;
+  background-color: white;
+  appearance: none; /* Remove default arrow in some browsers */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M0 0h4L2 3z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+/* Select focus */
+.modal select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Field Group Layout */
+.modal .field-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Add space between fields */
+}
+
+.modal .field-group label {
+  width: 30%; /* Adjust label width */
+  margin-right: 10px; /* Space between label and input */
+}
+
+.modal .field-group input,
+.modal .field-group select {
+  width: 65%; /* Adjust iniput/select width */
+}
+
+/* Error Message Style */
+.error-msg {
+  color: red;
+  border: none;
+}
+
+.btn {
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+/* ***************** TABLE  ********************* */
+
+.task-table {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.task-table h2 {
+  /* margin-bottom: 20px; */
+  color: var(--primaryColor);
+}
+
+/* Ensure the table container takes full height and is scrollable */
+.table-container {
+  flex-grow: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 70vh; /* Adjust height as needed */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f1f1f1;
+  color: #333;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+td {
+  color: #555;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Scrollbar styling */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.approved {
+  color: var(--success);
+}
+
+.rejected {
+  color: var(--danger);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  /* background-color: red; */
+}
+/* .custom-time-picker {
+  display: flex;
+  gap: 10px; 
+  align-items: center;
+}
+
+.custom-time-picker select {
+  padding: 5px;
+  font-size: 16px;
+} */
+/* Switch Container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+/* Hide default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider (Toggle) */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+/* The Circle */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* When Checked */
+input:checked + .slider {
+  background-color: var(--primaryColor);
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* Optional: Add a glowing effect */
+input:checked + .slider {
+  box-shadow: 0 0 10px white;
+}
+
+/* ********************* END TABLE *************** */
+
+/* *********** ADD BUTTON ************** */
+.add-button {
+  padding: 8px 20px;
+  font-size: 14px;
+  color: white;
+  background-color: var(--primaryColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.date-filter button:hover,
+.add-button:hover {
+  background-color: var(--primaryColor);
+}
+
+/* Add Button (Green) */
+.add-button {
+  background-color: #28a745; /* Green background */
+  border-radius: 4px;
+  margin-right: 20px;
+  float: left;
+}
+
+.add-button:hover {
+  background-color: #218838; /* Darker green when hovered */
+}
+
+.action {
+  width: 200px;
+}
+
+.center {
+  text-align: center;
+}
+
+.text-danger {
+  color: #dc3545;
+  border: none;
+}

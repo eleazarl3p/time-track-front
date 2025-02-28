@@ -1,0 +1,103 @@
+<div class="task-table">
+  <div class="table-header">
+    <h2>Jobs</h2>
+
+    <button class="btn add-button" (click)="addJob()">Add</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th style="width: 70%">Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (job of jobs(); track job._id) {
+        <tr>
+          <td>{{ job.name }}</td>
+
+          <td style="text-align: left">
+            <span *ngFor="let itm of job.items">{{ itm }} , </span>
+          </td>
+          <td>
+            <button class="btn" (click)="editJob(job)">Edit</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@if(showJobModal()) {
+<div class="modal-overlay">
+  <div class="modal" style="width: 450px">
+    <div class="modal-header">
+      <h2>{{ job._id == 0 ? "Add Job" : "Update Job" }}</h2>
+    </div>
+
+    <form #form="ngForm">
+      <div class="field-group">
+        <label>Project number:</label>
+        <input
+          type="text"
+          [(ngModel)]="job.name"
+          name="jobName"
+          #jobName="ngModel"
+          required
+        />
+      </div>
+      <div class="field-group">
+        @if(jobName.touched) { @if(jobName.errors?.['required']) {
+        <p class="text-danger">Job name cannot be empty</p>
+        } }
+      </div>
+      <div class="field-group">
+        <label>Item number:</label>
+        <input
+          type="text"
+          [(ngModel)]="newItemName"
+          (keyup)="addItem($event)"
+          name="itemnumber"
+        />
+      </div>
+
+      <h4 class="center bottom1x">Items</h4>
+      <div class="items-list">
+        <label *ngFor="let item of job.items; let i = index">
+          {{ item }}
+          <button class="btn" (click)="removeItem(i, $event)">Remove</button>
+        </label>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="cancel-button" (click)="closeModal($event)">
+          Cancel
+        </button>
+
+        <button
+          class="save-button"
+          (click)="saveJob()"
+          [disabled]="!form.valid"
+          *ngIf="job._id == 0"
+        >
+          Save
+        </button>
+
+        <button
+          class="save-button"
+          (click)="updateJob(job)"
+          [disabled]="!form.valid"
+          *ngIf="job._id != 0"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+}

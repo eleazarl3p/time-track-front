@@ -1,0 +1,86 @@
+<!-- <div class="modal-overlay">
+  <div class="modal">
+  
+    <div class="modal-header">
+      <h2>Add New Task</h2>
+      <button class="close-button" (click)="closeMdl.emit()">X</button>
+    </div>
+
+    <div class="field-group">
+      <label>Date: </label>
+      <input type="date" [(ngModel)]="date" />
+    </div>
+
+    <div class="field-group">
+      <label>User:</label>
+      <select name="" id="">
+        @for (user of users(); track $index) {
+        <option [value]="user">{{ user }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label for="pt">Pay Type:</label>
+      <select id="pt" name="pay_type" [(ngModel)]="pay_type">
+        <option value="WORK">Work</option>
+        <option value="LUNCH">Lunch</option>
+        <option value="PERSONAL">Personal</option>
+        <option value="VACATION">Vacation</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label>Start Time:</label>
+      <input type="time" [(ngModel)]="start_time" />
+    </div>
+
+    <div class="field-group">
+      <label>End Time:</label>
+      <input type="time" [(ngModel)]="end_time" />
+    </div>
+
+    <div *ngIf="pay_type() == 'WORK'">
+      <div class="field-group">
+        <label>Code:</label>
+        <input type="text" [(ngModel)]="code" />
+      </div>
+
+      <div class="field-group">
+        <label>Job:</label>
+        <select [(ngModel)]="selectedJob">
+          <option *ngFor="let job of jobs()" [value]="job._id">
+            {{ job.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Item #:</label>
+        <select [(ngModel)]="selectedItem">
+          <option *ngFor="let item of items()" [value]="item._id">
+            {{ item.no }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    @if (isAdmin && taskIn != null) {
+    <div class="field-group">
+      <label>Approved:</label>
+      <select [(ngModel)]="approved" id="">
+        <option [value]="null">Not Yet Reviewed</option>
+        <option [value]="true">✔ Approved</option>
+        <option [value]="false">✘ Rejected</option>
+      </select>
+    </div>
+    }
+
+    <p class="error-msg" style="border: none">{{ errorMsg() }}</p>
+
+    <div class="modal-buttons">
+      <div></div>
+      <button class="save-button" (click)="addTask()">Save</button>
+    </div>
+  </div>
+</div> -->
