@@ -6,7 +6,7 @@
 
     <form #form="ngForm">
       <div class="field-group">
-        <label>First Name: </label>
+        <label>First Name: {{ user._id }} </label>
         <input
           type="text"
           [(ngModel)]="user.first_name"
@@ -46,7 +46,7 @@
           <option value="EMPLOYEE">User</option>
         </select>
       </div>
-
+      @if(user._id != 0) {
       <div class="field-group">
         <label>Password:</label>
         <input
@@ -72,7 +72,7 @@
           (keyup)="valideUser()"
         />
       </div>
-
+      }
       <p
         class="error-msg"
         style="border: none; margin: 0; padding: 0; text-align: center"
