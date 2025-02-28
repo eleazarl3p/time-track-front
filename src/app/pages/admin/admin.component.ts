@@ -336,7 +336,7 @@ export class AdminComponent implements OnInit {
       }
       return 1;
     });
-    this.sumarizedTask.set(res);
+    this.sumarizedTask.set(sorted);
   }
 
   filterTasks(event: { fromDate: string; toDate: string }): void {
@@ -613,7 +613,7 @@ export class AdminComponent implements OnInit {
       const [hours, minutes] = workingHours.split(':').map(Number);
 
       // Create a unique key using job name and item number
-      const key = `${task.job.name}-${task.item.no}`;
+      const key = `${task.job.name}-${task.item}`;
 
       // Add the hours to the total for this job/item group
       const totalMinutes = hours * 60 + minutes;
