@@ -10,7 +10,7 @@ import { IUser } from '../components/user/models/loggedUser.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:3000/auth';
+  //private apiUrl = 'http://127.0.0.1:3000/auth';
 
   http = inject(HttpClient);
   router = inject(Router);
@@ -19,7 +19,7 @@ export class AuthService {
     return this.http.post(
       `${environment.API_URL}/auth/login`,
       { username, password },
-      { responseType: 'text' }
+      { responseType: 'text', withCredentials: true }
     );
   }
 
