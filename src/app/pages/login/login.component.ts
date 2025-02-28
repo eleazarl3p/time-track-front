@@ -26,7 +26,11 @@ export class LoginComponent {
       .subscribe((tkn: string) => {
         localStorage.setItem('token', tkn);
 
-        this.router.navigate(['/activity']);
+        if (this.password == '1234') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/activity']);
+        }
       });
   }
 }

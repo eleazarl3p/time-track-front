@@ -179,7 +179,8 @@ export class UtaskComponent implements OnInit {
   getCostCenters() {
     this.ccService.getCC().subscribe((res) => {
       this.costCenters = res;
-      console.log(res);
+
+      //console.log(res);
     });
   }
   getJobs() {
